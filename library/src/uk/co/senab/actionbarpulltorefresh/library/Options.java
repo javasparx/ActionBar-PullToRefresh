@@ -25,6 +25,7 @@ public final class Options {
     private static final int DEFAULT_HEADER_LAYOUT = R.layout.default_header;
     private static final float DEFAULT_REFRESH_SCROLL_DISTANCE = 0.5f;
     private static final boolean DEFAULT_REFRESH_ON_UP = false;
+    private static final boolean DEFAULT_REFRESH_ON_DOWN = false;
     private static final int DEFAULT_REFRESH_MINIMIZED_DELAY = 1 * 1000;
     private static final boolean DEFAULT_REFRESH_MINIMIZE = true;
 
@@ -32,13 +33,15 @@ public final class Options {
         return new Builder();
     }
 
-    Options() {}
+    Options() {
+    }
 
     EnvironmentDelegate environmentDelegate = null;
     int headerLayout = DEFAULT_HEADER_LAYOUT;
     HeaderTransformer headerTransformer = null;
     float refreshScrollDistance = DEFAULT_REFRESH_SCROLL_DISTANCE;
     boolean refreshOnUp = DEFAULT_REFRESH_ON_UP;
+    boolean refreshOnDown = DEFAULT_REFRESH_ON_DOWN;
     int refreshMinimizeDelay = DEFAULT_REFRESH_MINIMIZED_DELAY;
 
     /**
@@ -96,6 +99,11 @@ public final class Options {
          */
         public Builder refreshOnUp(boolean enabled) {
             mOptions.refreshOnUp = enabled;
+            return this;
+        }
+
+        public Builder refreshOnDown(boolean enabled) {
+            mOptions.refreshOnDown = enabled;
             return this;
         }
 

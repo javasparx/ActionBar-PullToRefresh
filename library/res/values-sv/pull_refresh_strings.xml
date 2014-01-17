@@ -16,8 +16,8 @@
 
 <resources>
 
-    <string name="pull_to_refresh_pull_label">Dra nedåt om du vill uppdatera</string>
-    <string name="pull_to_refresh_release_label">Släpp om du vill uppdatera</string>
-    <string name="pull_to_refresh_refreshing_label">Uppdaterar…</string>
+	<string name="pull_to_refresh_pull_label">Dra nedåt om du vill uppdatera</string>
+	<string name="pull_to_refresh_release_label">Släpp om du vill uppdatera</string>
+	<string name="pull_to_refresh_refreshing_label">Uppdaterar…</string>
 
 </resources>

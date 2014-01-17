@@ -23,10 +23,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-
 import uk.co.senab.actionbarpulltorefresh.library.ActionBarPullToRefresh;
-import uk.co.senab.actionbarpulltorefresh.library.listeners.OnRefreshListener;
 import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout;
+import uk.co.senab.actionbarpulltorefresh.library.listeners.OnRefreshBottomListener;
+import uk.co.senab.actionbarpulltorefresh.library.listeners.OnRefreshListener;
 
 /**
  * This sample shows how to use ActionBar-PullToRefresh with a
@@ -43,8 +43,7 @@ public class ListViewActivity extends BaseSampleActivity {
     /**
      * Fragment Class
      */
-    public static class SampleListFragment extends ListFragment implements
-            OnRefreshListener {
+    public static class SampleListFragment extends ListFragment implements OnRefreshListener {
 
         private static String[] ITEMS = {"Abbaye de Belloc", "Abbaye du Mont des Cats", "Abertam",
                 "Abondance", "Ackawi", "Acorn", "Adelost", "Affidelice au Chablis", "Afuega'l Pitu",
@@ -57,7 +56,7 @@ public class ListViewActivity extends BaseSampleActivity {
 
         @Override
         public void onViewCreated(View view, Bundle savedInstanceState) {
-            super.onViewCreated(view,savedInstanceState);
+            super.onViewCreated(view, savedInstanceState);
             ViewGroup viewGroup = (ViewGroup) view;
 
             // As we're using a ListFragment we create a PullToRefreshLayout manually
@@ -67,9 +66,15 @@ public class ListViewActivity extends BaseSampleActivity {
             ActionBarPullToRefresh.from(getActivity())
                     // We need to insert the PullToRefreshLayout into the Fragment's ViewGroup
                     .insertLayoutInto(viewGroup)
-                    // Here we mark just the ListView and it's Empty View as pullable
+                            // Here we mark just the ListView and it's Empty View as pullable
                     .theseChildrenArePullable(android.R.id.list, android.R.id.empty)
-                    .listener(this)
+//                    .listener(new OnRefreshBottomListener() {
+//                        @Override
+//                        public void onRefreshBottomStarted(View view) {
+//
+//                        }
+//                    })
+//                    .listener(this)
                     .setup(mPullToRefreshLayout);
         }
 

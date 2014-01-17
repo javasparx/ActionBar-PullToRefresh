@@ -28,8 +28,7 @@ import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout;
  * This sample shows how to use ActionBar-PullToRefresh with a
  * {@link android.widget.ScrollView ScrollView}.
  */
-public class ScrollViewActivity extends BaseSampleActivity
-        implements OnRefreshListener {
+public class ScrollViewActivity extends BaseSampleActivity        implements OnRefreshListener {
 
     private PullToRefreshLayout mPullToRefreshLayout;
 

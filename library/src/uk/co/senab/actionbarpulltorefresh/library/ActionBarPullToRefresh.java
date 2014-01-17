@@ -20,13 +20,13 @@ package uk.co.senab.actionbarpulltorefresh.library;
 import android.app.Activity;
 import android.view.View;
 import android.view.ViewGroup;
+import uk.co.senab.actionbarpulltorefresh.library.listeners.OnRefreshBottomListener;
+import uk.co.senab.actionbarpulltorefresh.library.listeners.OnRefreshListener;
+import uk.co.senab.actionbarpulltorefresh.library.viewdelegates.ViewDelegate;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
-
-import uk.co.senab.actionbarpulltorefresh.library.listeners.OnRefreshListener;
-import uk.co.senab.actionbarpulltorefresh.library.viewdelegates.ViewDelegate;
 
 public class ActionBarPullToRefresh {
 
@@ -35,20 +35,21 @@ public class ActionBarPullToRefresh {
     }
 
     public static final class SetupWizard {
-        private final Activity mActivity;
-        private Options mOptions;
+        private final Activity activity;
+        private Options options;
         private int[] refreshableViewIds;
         private View[] refreshableViews;
-        private OnRefreshListener mOnRefreshListener;
+        private OnRefreshListener onRefreshListener;
+        private OnRefreshBottomListener onRefreshBottomListener;
         private ViewGroup mViewGroupToInsertInto;
         private HashMap<Class, ViewDelegate> mViewDelegates;
 
         private SetupWizard(Activity activity) {
-            mActivity = activity;
+            this.activity = activity;
         }
 
         public SetupWizard options(Options options) {
-            mOptions = options;
+            this.options = options;
             return this;
         }
 
@@ -79,7 +80,12 @@ public class ActionBarPullToRefresh {
         }
 
         public SetupWizard listener(OnRefreshListener listener) {
-            mOnRefreshListener = listener;
+            onRefreshListener = listener;
+            return this;
+        }
+
+        public SetupWizard listener(OnRefreshBottomListener listener) {
+            onRefreshBottomListener = listener;
             return this;
         }
 
@@ -89,9 +95,10 @@ public class ActionBarPullToRefresh {
         }
 
         public void setup(PullToRefreshLayout pullToRefreshLayout) {
-            PullToRefreshAttacher attacher = pullToRefreshLayout.createPullToRefreshAttacher(
-                    mActivity, mOptions);
-            attacher.setOnRefreshListener(mOnRefreshListener);
+            PullToRefreshAttacher attacher = pullToRefreshLayout
+                    .createPullToRefreshAttacher(activity, options);
+            attacher.setOnRefreshListener(onRefreshListener);
+            attacher.setOnRefreshBottomListener(onRefreshBottomListener);
 
             if (mViewGroupToInsertInto != null) {
                 insertLayoutIntoViewGroup(mViewGroupToInsertInto, pullToRefreshLayout);
@@ -118,7 +125,7 @@ public class ActionBarPullToRefresh {
         }
 
         private static void insertLayoutIntoViewGroup(ViewGroup viewGroup,
-                PullToRefreshLayout pullToRefreshLayout) {
+                                                      PullToRefreshLayout pullToRefreshLayout) {
             // Move all children to PullToRefreshLayout. This code looks a bit silly but the child
             // indices change every time we remove a View (so we can't just iterate through)
             View child = viewGroup.getChildAt(0);

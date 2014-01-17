@@ -25,18 +25,14 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.FrameLayout;
-
-import java.util.HashSet;
-
 import uk.co.senab.actionbarpulltorefresh.library.listeners.HeaderViewListener;
-import uk.co.senab.actionbarpulltorefresh.library.listeners.OnRefreshListener;
 import uk.co.senab.actionbarpulltorefresh.library.viewdelegates.ViewDelegate;
 
 /**
  * The main component of the library. You wrap the views you wish to be 'pullable' within this layout.
  * This layout is setup by using the {@link ActionBarPullToRefresh} setup-wizard return by
+ *
  * @link ActionBarPullToRefresh#from(android.app.Activity)}.
  */
 public class PullToRefreshLayout extends FrameLayout {
@@ -62,8 +58,7 @@ public class PullToRefreshLayout extends FrameLayout {
      * Manually set this Attacher's refreshing state. The header will be
      * displayed or hidden as requested.
      *
-     * @param refreshing
-     *            - Whether the attacher should be in a refreshing state,
+     * @param refreshing - Whether the attacher should be in a refreshing state,
      */
     public final void setRefreshing(boolean refreshing) {
         ensureAttacher();
@@ -81,7 +76,7 @@ public class PullToRefreshLayout extends FrameLayout {
     /**
      * Call this when your refresh is complete and this view should reset itself
      * (header view will be hidden).
-     *
+     * <p/>
      * This is the equivalent of calling <code>setRefreshing(false)</code>.
      */
     public final void setRefreshComplete() {
@@ -218,8 +213,8 @@ public class PullToRefreshLayout extends FrameLayout {
         return null;
     }
 
-    protected PullToRefreshAttacher createPullToRefreshAttacher(Activity activity,
-            Options options) {
+    protected PullToRefreshAttacher
+    createPullToRefreshAttacher(Activity activity, Options options) {
         return new PullToRefreshAttacher(activity, options != null ? options : new Options());
     }
 

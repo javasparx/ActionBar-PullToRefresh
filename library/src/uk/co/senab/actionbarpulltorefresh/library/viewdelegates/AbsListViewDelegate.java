@@ -26,7 +26,10 @@ import android.widget.AbsListView;
  */
 public class AbsListViewDelegate implements ViewDelegate {
 
-    public static final Class[] SUPPORTED_VIEW_CLASSES =  { AbsListView.class };
+    private static final boolean DEBUG = true;
+    private static final String LOG_TAG = "AbsListViewDelegate";
+
+    public static final Class[] SUPPORTED_VIEW_CLASSES = {AbsListView.class};
 
     @Override
     public boolean isReadyForPull(View view, final float x, final float y) {
@@ -57,6 +60,47 @@ public class AbsListViewDelegate implements ViewDelegate {
         return ready;
     }
 
+    @Override
+    public boolean isReadyForPullDown(View view, float x, float y) {
+        boolean ready = false;
+
+        // First we check whether we're scrolled to the top
+        AbsListView absListView = (AbsListView) view;
+        if (absListView.getCount() == 0) {
+            ready = true;
+        } else if (absListView.getLastVisiblePosition() == absListView.getCount()-1) {
+
+            final View lastVisibleChild = absListView.getChildAt(absListView.getChildCount() - 1);
+//            final View firstVisibleChild = absListView.getChildAt(0);
+            ready = lastVisibleChild != null && lastVisibleChild.getBottom() <= view.getBottom();
+            if (lastVisibleChild != null) {
+//                if (DEBUG) Log.d(LOG_TAG, "lastVisibleChild.getBottom(): " + lastVisibleChild.getBottom());
+//                if (DEBUG) Log.d(LOG_TAG, "view.getBottom(): " + view.getBottom());
+            }
+        }
+
+//        if (DEBUG) Log.d(LOG_TAG, "ready: " + ready);
+//        if (DEBUG) Log.d(LOG_TAG, "absListView.getFirstVisiblePosition(): " + absListView.getFirstVisiblePosition());
+//        if (DEBUG) Log.d(LOG_TAG, "absListView.getLastVisiblePosition(): " + absListView.getLastVisiblePosition());
+//        if (DEBUG) Log.d(LOG_TAG, "absListView.getCount(): " + absListView.getCount());
+
+        // Then we have to check whether the fas scroller is enabled, and check we're not starting
+        // the gesture from the scroller
+        if (ready && absListView.isFastScrollEnabled() && isFastScrollAlwaysVisible(absListView)) {
+            switch (getVerticalScrollbarPosition(absListView)) {
+                case View.SCROLLBAR_POSITION_RIGHT:
+                    ready = x < absListView.getRight() - absListView.getVerticalScrollbarWidth();
+                    break;
+                case View.SCROLLBAR_POSITION_LEFT:
+                    ready = x > absListView.getVerticalScrollbarWidth();
+                    break;
+            }
+        }
+
+        return ready;
+
+    }
+
     int getVerticalScrollbarPosition(AbsListView absListView) {
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB ?
                 CompatV11.getVerticalScrollbarPosition(absListView) :
@@ -73,6 +117,7 @@ public class AbsListViewDelegate implements ViewDelegate {
         static int getVerticalScrollbarPosition(AbsListView absListView) {
             return View.SCROLLBAR_POSITION_RIGHT;
         }
+
         static boolean isFastScrollAlwaysVisible(AbsListView absListView) {
             return false;
         }
@@ -83,6 +128,7 @@ public class AbsListViewDelegate implements ViewDelegate {
         static int getVerticalScrollbarPosition(AbsListView absListView) {
             return absListView.getVerticalScrollbarPosition();
         }
+
         static boolean isFastScrollAlwaysVisible(AbsListView absListView) {
             return absListView.isFastScrollAlwaysVisible();
         }

@@ -15,7 +15,7 @@
   -->
 
 <resources>
-    <string name="pull_to_refresh_pull_label">Traukite, kad atnaujinti…</string>
-    <string name="pull_to_refresh_release_label">Paleiskite, kad atnaujinti…</string>
-    <string name="pull_to_refresh_refreshing_label">Kraunama…</string>
+	<string name="pull_to_refresh_pull_label">Traukite, kad atnaujinti…</string>
+	<string name="pull_to_refresh_release_label">Paleiskite, kad atnaujinti…</string>
+	<string name="pull_to_refresh_refreshing_label">Kraunama…</string>
 </resources>
